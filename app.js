@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const stripe = require('stripe')(
   'sk_test_51Il1z9IzU5fOmsJUQwQMy5C5qBk36695D9cyVmuZRGL7r68AQS68e5pMOBfqlx4CeimbyAmpqAmv6XSjkBwRxedr00etUBD5tO'
 );
+let multer = require('multer');
+let uniqid = require('uniqid');
 
 let adminRouter = require('./routes/adminRoutes');
 let indexRouter = require('./routes/indexRoutes');
@@ -32,9 +34,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
+let imageStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'public/images'),
+  filename: (req, file, cb) => cb(null, file.originalname),
+});
+app.use(multer({ storage: imageStorage }).single('imageFile'));
 // Set Static Folder
 app.use(express.static(path.join(__dirname, '/public')));
 
+//let id = 1;
 // Connect flash
 app.use(flash());
 app.use(
@@ -66,5 +74,31 @@ app.use('/admin/', adminRouter);
 app.get('/projects', async (req, res) => {
   let projects = await Project.find();
   res.send(projects);
+});
+
+app.post('/projects', async (req, res) => {
+  let reqBody = req.body;
+  let imgPath;
+  if (reqBody.imageURL) {
+    imgPath = reqBody.imageURL;
+  } else {
+    imgPath = req.file.path.substring(
+      req.file.path.indexOf('/'),
+      req.file.path.length
+    );
+  }
+  let newProject = new Project({
+    id: uniqid(),
+    title: reqBody.title,
+    date: new Date(),
+    description: reqBody.description,
+    text: reqBody.text,
+    location: reqBody.location,
+    imageURL: imgPath,
+    donation: reqBody.donation,
+    eventDate: reqBody.eventdate,
+  });
+  await newProject.save();
+  res.send('Created');
 });
 module.exports = app;

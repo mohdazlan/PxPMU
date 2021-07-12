@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   projects.forEach((x) => {
     let projectHTML = `<div class="col-4">
     <div class="card">
-        <img class="card-img-top" src="${x.imageAddress}" alt="${x.title}">
+        <img class="card-img-top" src="${x.imageURL}" alt="${x.title}">
         <div class="card-body">
             <h4 class="card-title">${x.title}</h4>
             <p class="card-text">${x.description}</p>
