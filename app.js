@@ -13,6 +13,8 @@ let uniqid = require('uniqid');
 let adminRouter = require('./routes/adminRoutes');
 let indexRouter = require('./routes/indexRoutes');
 let usersRouter = require('./routes/userRoutes');
+let projectRouter = require('./routes/projectRoutes');
+
 const passport = require('passport');
 const Project = require('./models/projectModel');
 var path = require('path');
@@ -70,35 +72,6 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users/', usersRouter);
 app.use('/admin/', adminRouter);
+app.use('/projects/', projectRouter);
 
-app.get('/projects', async (req, res) => {
-  let projects = await Project.find();
-  res.send(projects);
-});
-
-app.post('/projects', async (req, res) => {
-  let reqBody = req.body;
-  let imgPath;
-  if (reqBody.imageURL) {
-    imgPath = reqBody.imageURL;
-  } else {
-    imgPath = req.file.path.substring(
-      req.file.path.indexOf('/'),
-      req.file.path.length
-    );
-  }
-  let newProject = new Project({
-    id: uniqid(),
-    title: reqBody.title,
-    date: new Date(),
-    description: reqBody.description,
-    text: reqBody.text,
-    location: reqBody.location,
-    imageURL: imgPath,
-    donation: reqBody.donation,
-    eventDate: reqBody.eventdate,
-  });
-  await newProject.save();
-  res.send('Created');
-});
 module.exports = app;
