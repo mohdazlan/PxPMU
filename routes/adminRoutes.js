@@ -11,10 +11,21 @@ router.get('/', ensureAuthenticated, (req, res) =>
 );
 
 router.delete('/:id', async (req, res) => {
-  console.log('fuc');
   let id = req.params.id;
   await Project.deleteOne({ id: id });
   res.send('Deleted!');
+});
+
+router.get('/:id', async (req, res) => {
+  let id = req.params.id;
+  let project = await Project.findOne({ id: id });
+  res.send(project);
+});
+
+router.put('/:id', async (req, res) => {
+  let id = req.params.id;
+  await Project.updateOne({ id: id }, req.body);
+  res.send('Updated');
 });
 
 module.exports = router;

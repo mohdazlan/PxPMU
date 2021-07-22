@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   });
   //   addPosts();
   //   addCallbackRequests();
-  //   addEmails();
+  addEmails();
 });
 
 addProjectBtn.addEventListener('click', function () {
@@ -73,25 +73,25 @@ addProjectBtn.addEventListener('click', function () {
 //   });
 // }
 
-// async function addEmails() {
-//   let requests = await getEmails();
-//   let requestsBlock = document.querySelector('#v-pills-mails');
-//   requestsBlock.innerHTML = '';
-//   let i = 1;
-//   requests.forEach((request) => {
-//     let requestHTML = `<article class="d-flex justify-content-between align-items-center article-inline">
-//         <div class="num w5">${i++}
-//         </div>
-//         <input class="id" type="hidden" value="${request.id}">
-//         <div class="name w60">${request.name}</div>
-//         <div class="email w60">${request.email}</div>
-//         <div class="date w30">${request.date}</div>
-//         <div class="remove w5"><button class="btn btn-link btn-remove">X</button></div>
-//         <div class="text">${request.text}</div>
-//     </article>`;
-//     requestsBlock.insertAdjacentHTML('beforeend', requestHTML);
-//   });
-// }
+async function addEmails() {
+  let requests = await getEmails();
+  let requestsBlock = document.querySelector('#v-pills-mails');
+  requestsBlock.innerHTML = '';
+  let i = 1;
+  requests.forEach((request) => {
+    let requestHTML = `<article class="d-flex justify-content-between align-items-center article-inline">
+        <div class="num w5">${i++}
+        </div>
+        <input class="id" type="hidden" value="${request.id}">
+        <div class="name w60">${request.name}</div>
+        <div class="email w60">${request.email}</div>
+        <div class="date w30">${request.date}</div>
+        <div class="remove w5"><button class="btn btn-link btn-remove">X</button></div>
+        <div class="text">${request.text}</div>
+    </article>`;
+    requestsBlock.insertAdjacentHTML('beforeend', requestHTML);
+  });
+}
 
 // logOutBtn.addEventListener('click', function () {
 //   document.cookie.split(';').forEach(function (c) {

@@ -11,6 +11,7 @@ let multer = require('multer');
 let uniqid = require('uniqid');
 
 let adminRouter = require('./routes/adminRoutes');
+let emailRouter = require('./routes/emailRoutes');
 let indexRouter = require('./routes/indexRoutes');
 let usersRouter = require('./routes/userRoutes');
 let projectRouter = require('./routes/projectRoutes');
@@ -72,6 +73,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users/', usersRouter);
 app.use('/admin/', adminRouter);
+app.use('/emails/', emailRouter);
 app.use('/projects/', projectRouter);
 
 module.exports = app;

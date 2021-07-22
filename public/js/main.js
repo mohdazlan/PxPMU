@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 callMeForm.addEventListener('submit', function (e) {
   e.preventDefault();
   let phoneInp = callMeForm.querySelector('input');
-  fetch('http://localhost:3000/callback-requests', {
+  fetch('http://localhost:3000/admin', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
