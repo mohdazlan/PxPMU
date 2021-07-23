@@ -2,6 +2,7 @@ let emailRequestForm = document.querySelector('.email-request-form');
 
 emailRequestForm.addEventListener('submit', function (e) {
   e.preventDefault();
+  console.log('hiii');
   fetch('http://localhost:3000/admin', {
     method: 'POST',
     headers: {
